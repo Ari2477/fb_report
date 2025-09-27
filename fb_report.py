@@ -87,22 +87,17 @@ class FacebookAccountReporter:
         with open("facebook_account_report.json", "w") as f:  
             json.dump(report, f, indent=4)  
 
-# Usage  
-if __name__ == "__main__":
-    access_token = input("Please enter your Facebook access token: ")  
-    reporter = FacebookAccountReporter(access_token)  
-    reporter.generate_report()
+import requests
 
+ACCESS_TOKEN = "YOUR FACEBOOK_TOKEN"
 
 def get_facebook_post(uid, post_id):
-    access_token = 'YOUR_ACCESS_TOKEN'
-    url = f'https://graph.facebook.com/v12.0/{post_id}?fields=message,created_time,from&access_token={access_token}'
-
+    url = f'https://graph.facebook.com/v12.0/{post_id}?fields=message,created_time,from&access_token={ACCESS_TOKEN}'
     response = requests.get(url)
 
     if response.status_code == 200:
         post_data = response.json()
-        print(f"Post from: {post_data['from']['name']}")
+        print(f"\nPost from: {post_data['from']['name']}")
         print(f"Message: {post_data.get('message', 'No message available')}")
         print(f"Created Time: {post_data['created_time']}")
     else:
